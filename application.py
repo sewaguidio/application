@@ -118,7 +118,7 @@ video_file = st.file_uploader("Choisir une vidéo", type=["mp4"])
 
 # Sélectionner la langue
 langue_selectionnee = st.selectbox("Sélectionnez une langue", langues)
-check_installation()
+#check_installation()
 # Extraire le code de langue
 lang = langue_selectionnee.split("(")[1].split(")")[0]
 
