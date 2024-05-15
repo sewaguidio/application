@@ -7,6 +7,8 @@
 !pip install streamlit
 !pip install numpy
 """
+import subprocess
+import sys
 import tempfile
 import os
 import requests
@@ -84,6 +86,25 @@ def convert_to_srt(datas, output_filename, lang):
             f.write(f"{subtitle_text}\n\n")
 
 
+def check_installation():
+    try:
+        # Vérifier si ImageMagick est installé en exécutant la commande "convert -version"
+        subprocess.run(["convert", "-version"], check=True)
+        print("ImageMagick est déjà installé.")
+    except subprocess.CalledProcessError:
+        # Si une erreur est levée, ImageMagick n'est pas installé
+        print("ImageMagick n'est pas installé sur ce système.")
+        install_imagemagick()
+
+def install_imagemagick():
+    try:
+        # Installer ImageMagick en utilisant la commande apt-get sur Linux Debian/Ubuntu
+        subprocess.run(["sudo", "apt-get", "install", "imagemagick"], check=True)
+        print("ImageMagick a été installé avec succès.")
+    except subprocess.CalledProcessError:
+        print("Une erreur s'est produite lors de l'installation d'ImageMagick.")
+        sys.exit(1)
+
 # Liste des langues disponibles
 langues = [ "Anglais (en)", "Ewe (ee)", "Yoruba (yo)"]
 
@@ -97,7 +118,7 @@ video_file = st.file_uploader("Choisir une vidéo", type=["mp4"])
 
 # Sélectionner la langue
 langue_selectionnee = st.selectbox("Sélectionnez une langue", langues)
-
+ check_installation()
 # Extraire le code de langue
 lang = langue_selectionnee.split("(")[1].split(")")[0]
 
