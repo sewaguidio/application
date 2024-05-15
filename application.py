@@ -90,19 +90,19 @@ def check_installation():
     try:
         # Vérifier si ImageMagick est installé en exécutant la commande "convert -version"
         subprocess.run(["convert", "-version"], check=True)
-        print("ImageMagick est déjà installé.")
+        st.write("ImageMagick est déjà installé.")
     except subprocess.CalledProcessError:
         # Si une erreur est levée, ImageMagick n'est pas installé
-        print("ImageMagick n'est pas installé sur ce système.")
+        st.write("ImageMagick n'est pas installé sur ce système.")
         install_imagemagick()
 
 def install_imagemagick():
     try:
         # Installer ImageMagick en utilisant la commande apt-get sur Linux Debian/Ubuntu
         subprocess.run(["sudo", "apt-get", "install", "imagemagick"], check=True)
-        print("ImageMagick a été installé avec succès.")
+        st.write("ImageMagick a été installé avec succès.")
     except subprocess.CalledProcessError:
-        print("Une erreur s'est produite lors de l'installation d'ImageMagick.")
+        st.write("Une erreur s'est produite lors de l'installation d'ImageMagick.")
         sys.exit(1)
 
 # Liste des langues disponibles
