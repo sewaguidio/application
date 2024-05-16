@@ -7,7 +7,7 @@ import streamlit as st
 from deep_translator import GoogleTranslator
 
 #cmd = "cat /etc/ImageMagick-6/policy.xml | sed 's/none/read,write/g' > /etc/ImageMagick-6/policy.xml"
-cmd = "sed -i 's/none/read,write/g'/ etc/ImageMagick-6/policy.xml"
+cmd = "sudo sed -i 's/none/read,write/g'/ etc/ImageMagick-6/policy.xml"
 os.system(cmd)
 
 def extraire_audio(chemin_video):
