@@ -6,10 +6,6 @@ from moviepy.video.tools.subtitles import SubtitlesClip
 import streamlit as st
 from deep_translator import GoogleTranslator
 
-#cmd = "cat /etc/ImageMagick-6/policy.xml | sed 's/none/read,write/g' > /etc/ImageMagick-6/policy.xml"
-cmd = "sudo sed -i 's/none/read,write/g'/ etc/ImageMagick-6/policy.xml"
-os.system(cmd)
-
 def extraire_audio(chemin_video):
     video = VideoFileClip(chemin_video)
     audio = video.audio
@@ -94,8 +90,18 @@ def main():
                     convert_to_srt(subtitle_data, output_filename, lang)
 
                     srtfilename = output_filename
+                    def generator(txt):
+                        # Ajuster la taille de la police en fonction de la longueur du texte
+                        fontsize = 18 if len(txt) < 50 else 14
+                        
+                        # Créer le TextClip avec des marges
+                        txt_clip = TextClip(txt, font='Arial', fontsize=fontsize, color='white')
+                        txt_clip = txt_clip.set_position(('center', 0.85)) # Positionnement vertical
+                        txt_clip = txt_clip.set_duration(5) # Durée des sous-titres (5 secondes)
+                        
+                        return txt_clip
 
-                    generator = lambda txt: TextClip(txt, font='Arial', fontsize=18, color='white')
+                    #generator = lambda txt: TextClip(txt, font='Arial', fontsize=18, color='white')
                     subtitles = SubtitlesClip(output_filename, generator, encoding='utf-8')
 
                     video = VideoFileClip(video_path)
